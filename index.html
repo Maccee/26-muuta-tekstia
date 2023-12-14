@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fonttikoko</title>
+
+    <link rel="stylesheet" href="./layout.css" />
+  </head>
+  <body>
+    <section class="container">
+      <h1>Muuta fonttikokoa Javascriptillä</h1>
+      <p>Huom! Kaikki muutokset tapahtuvat Javascriptin avulla.</p>
+      <p>
+        Listan fonttikokoa muutetaan alla olevaa painonappia painamalla. Listan
+        oletusfonttikoko on 16px.
+      </p>
+      <h2>Tämän listan fonttikoko muuttuu nappia painamalla</h2>
+      <ol id="lista">
+        <li>20px</li>
+        <li>24px</li>
+        <li>28px</li>
+        <li>32px</li>
+        <li>16px</li>
+      </ol>
+      <button class="button1" onclick="changeFontSize()">Fonttikoko</button>
+      <button class="button2" onclick="changeFontStyle()">Fonttityyli</button>
+      <p id="fontInfo"></p>
+    </section>
+    <script>
+      let body = document.getElementsByTagName("BODY")[0];
+      let fontInfoElement = document.getElementById("fontInfo");
+      let listaElement = document.getElementById("lista");
+
+      let sizeCount = 0;
+      let styleCount = 0;
+      let fonts = [
+        "Times New Roman, serif",
+        "Arial, sans-serif",
+        "Courier New, monospace",
+        "Georgia, serif",
+        "Verdana, sans-serif",
+      ];
+
+      updateFontInfo();
+
+      function changeFontSize() {
+        currentSize = parseFloat(listaElement.style.fontSize) || 16;
+        if (sizeCount === 4) {
+          listaElement.style.fontSize = "16px";
+          sizeCount = 0;
+          updateFontInfo();
+          return;
+        }
+        sizeCount++;
+        listaElement.style.fontSize = currentSize + 4 + "px";
+        updateFontInfo();
+      }
+
+      function changeFontStyle() {
+        if (styleCount === fonts.length) {
+          body.style.fontFamily = fonts[0];
+          styleCount = 0;
+          updateFontInfo();
+          return;
+        }
+        body.style.fontFamily = fonts[styleCount];
+        styleCount++;
+        updateFontInfo();
+      }
+      function updateFontInfo() {
+        currentSize = getComputedStyle(listaElement).fontSize;
+        currentStyle = getComputedStyle(body).fontFamily;
+
+        fontInfoElement.innerText = `Fonttikoko: ${currentSize} ja fonttityyli ${currentStyle}`;
+      }
+    </script>
+  </body>
+</html>
